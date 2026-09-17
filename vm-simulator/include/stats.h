@@ -1,18 +1,24 @@
 #ifndef STATS_H
 #define STATS_H
 
-typedef struct {
-    int total_references;
-    int page_hits;
-    int page_faults;
-} Stats;
+#include "common.h"
 
-void stats_init(Stats *stats);
+double calculate_hit_ratio(
+    const SimResult *result
+);
 
-void stats_record_hit(Stats *stats);
+double calculate_fault_ratio(
+    const SimResult *result
+);
 
-void stats_record_fault(Stats *stats);
+void stats_print(
+    const SimResult *result
+);
 
-void stats_print(const Stats *stats);
+void stats_compare(
+    const SimResult *fifo,
+    const SimResult *lru,
+    const SimResult *optimal
+);
 
 #endif

@@ -14,7 +14,7 @@ void page_table_init(
 );
 
 int page_table_lookup(
-    PageTableEntry page_table[],
+    const PageTableEntry page_table[],
     int page
 );
 

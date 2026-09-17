@@ -3,29 +3,22 @@
 
 #include "common.h"
 
-typedef struct {
-    int page;
-    int valid;
-    int reference_bit;
-} ClockFrame;
-
-int fifo_select_victim(
-    Frame frames[],
+SimResult run_fifo(
+    const int reference[],
+    int ref_count,
     int frame_count
 );
 
-int lru_select_victim(
-    Frame frames[],
-    int frame_count,
-    int last_used[]
+SimResult run_lru(
+    const int reference[],
+    int ref_count,
+    int frame_count
 );
 
-int optimal_select_victim(
-    Frame frames[],
-    int frame_count,
-    int reference[],
+SimResult run_optimal(
+    const int reference[],
     int ref_count,
-    int current_index
+    int frame_count
 );
 
 #endif
