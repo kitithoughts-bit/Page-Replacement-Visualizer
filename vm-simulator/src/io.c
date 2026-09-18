@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 #include "io.h"
-#include "algorithms.h"
+#include "common.h"
 
 
 void print_header(void)
