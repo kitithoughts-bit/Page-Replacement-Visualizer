@@ -7,10 +7,6 @@
 
 int main(void)
 {
-    // ========================================
-    // Reference String
-    // ========================================
-
     int reference[] = {
         7, 0, 1, 2, 0,
         3, 0, 4, 2, 3
@@ -21,13 +17,9 @@ int main(void)
 
     int frame_count = 3;
 
-    /* -----------------------------
-       Program Header
-       ----------------------------- */
     print_header();
 
-    printf("\nAlgorithm : FIFO\n");
-    printf("Frames    : %d\n", frame_count);
+    printf("\nFrames    : %d\n", frame_count);
 
     printf("References: ");
 
@@ -37,60 +29,98 @@ int main(void)
 
     printf("\n");
 
-    /* -----------------------------
-       Run FIFO Algorithm
-       ----------------------------- */
-    SimResult result = run_fifo(
-        reference,
-        ref_count,
-        frame_count
-    );
+    /*
+     * Select algorithm
+     */
+    int algorithm_choice =
+        input_algorithm();
 
-    /* -----------------------------
-       Select Display Mode
-       ----------------------------- */
-    int display_mode = input_display_mode();
+    SimResult result;
+
+    const char *algorithm_name;
+
+    /*
+     * Run selected algorithm
+     */
+    switch (algorithm_choice)
+    {
+        case 1:
+            result = run_fifo(
+                reference,
+                ref_count,
+                frame_count
+            );
+
+            algorithm_name = "FIFO";
+            break;
+
+        case 2:
+            result = run_lru(
+                reference,
+                ref_count,
+                frame_count
+            );
+
+            algorithm_name = "LRU";
+            break;
+
+        case 3:
+            printf("\nOptimal is not implemented yet.\n");
+            return 0;
+
+            algorithm_name = "OPTIMAL";
+            break;
+
+        default:
+            result = run_fifo(
+                reference,
+                ref_count,
+                frame_count
+            );
+
+            algorithm_name = "FIFO";
+            break;
+    }
+
+    /*
+     * Select display mode
+     */
+    int display_mode =
+        input_display_mode();
 
     switch (display_mode)
     {
         case 1:
-            /* Step-by-Step only */
             print_step_simulation(
                 &result,
                 reference,
-                "FIFO"
+                algorithm_name
             );
             break;
 
         case 2:
-            /* Full Table only */
             print_simulation_table(
                 &result,
-                "FIFO"
+                algorithm_name
             );
             break;
 
         case 3:
         default:
-            /* Both */
             print_step_simulation(
                 &result,
                 reference,
-                "FIFO"
+                algorithm_name
             );
 
             print_simulation_table(
                 &result,
-                "FIFO"
+                algorithm_name
             );
             break;
     }
 
-    /* -----------------------------
-       Final Statistics
-       ----------------------------- */
     print_statistics(&result);
 
     return 0;
-
 }

@@ -368,3 +368,40 @@ int input_display_mode(void)
 
     return choice;
 }
+
+int input_algorithm(void)
+{
+    int choice;
+
+    printf("\n");
+    printf("Select Algorithm\n");
+    printf("-----------------------\n");
+    printf("1. FIFO\n");
+    printf("2. LRU\n");
+    printf("3. Optimal\n");
+
+    printf("\nSelect: ");
+
+    if (scanf("%d", &choice) != 1) {
+
+        int c;
+
+        while ((c = getchar()) != '\n' &&
+               c != EOF) {
+        }
+
+        return 1;
+    }
+
+    int c;
+
+    while ((c = getchar()) != '\n' &&
+           c != EOF) {
+    }
+
+    if (choice < 1 || choice > 3) {
+        choice = 1;
+    }
+
+    return choice;
+}

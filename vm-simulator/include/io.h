@@ -3,9 +3,7 @@
 
 #include "common.h"
 
-
 void print_header(void);
-
 
 void print_reference_string(
     const int reference[],
@@ -13,6 +11,9 @@ void print_reference_string(
     int current_index
 );
 
+int input_algorithm(void);
+
+int input_display_mode(void);
 
 void print_step_simulation(
     const SimResult *result,
@@ -20,14 +21,9 @@ void print_step_simulation(
     const char *algorithm_name
 );
 
-
 void print_simulation_table(
     const SimResult *result,
     const char *algorithm_name
 );
-
-
-int input_display_mode(void);
-
 
 #endif
