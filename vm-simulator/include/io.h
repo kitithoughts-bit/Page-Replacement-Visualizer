@@ -3,37 +3,31 @@
 
 #include "common.h"
 
+
 void print_header(void);
-void print_main_menu(void);
 
-int input_frame_count(void);
 
-int input_reference_string(
-    int reference[],
-    int max_size
+void print_reference_string(
+    const int reference[],
+    int ref_count,
+    int current_index
 );
 
-int generate_random_reference(
-    int reference[],
-    int count,
-    int max_page
+
+void print_step_simulation(
+    const SimResult *result,
+    const int reference[],
+    const char *algorithm_name
 );
 
-int read_reference_file(
-    const char *filename,
-    int reference[],
-    int max_size
+
+void print_simulation_table(
+    const SimResult *result,
+    const char *algorithm_name
 );
 
-int input_algorithm(void);
 
-void print_frames(
-    const Frame frames[],
-    int frame_count
-);
+int input_display_mode(void);
 
-void print_simulation(
-    const SimResult *result
-);
 
 #endif

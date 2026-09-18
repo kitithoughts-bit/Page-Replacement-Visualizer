@@ -7,27 +7,42 @@
 
 #define EMPTY_FRAME -1
 
+/* Physical memory frame */
 typedef struct {
     int page;
     int valid;
 } Frame;
 
-/* สถานะของ Page Replacement ในแต่ละ Step */
+
+/* Result of one simulation step */
 typedef struct {
-    int page;                       // page ที่กำลัง reference
-    int frames[MAX_FRAMES];         // สถานะ frame หลังจากทำ step นี้
-    int is_fault;                   // 1 = fault, 0 = hit
-    int replaced_page;              // page ที่ถูกไล่ออก, -1 = ไม่มี
+    int page;
+
+    int frames[MAX_FRAMES];
+
+    int is_fault;
+
+    /*
+     * Page that was removed from memory.
+     * EMPTY_FRAME means no page was replaced.
+     */
+    int replaced_page;
+
 } SimStep;
 
-/* ผลลัพธ์ทั้งหมดจากการรัน Algorithm หนึ่งครั้ง */
+
+/* Complete result of one page replacement simulation */
 typedef struct {
+
     int faults;
     int hits;
+
     int total_refs;
     int num_frames;
 
     SimStep steps[MAX_REF];
+
 } SimResult;
+
 
 #endif

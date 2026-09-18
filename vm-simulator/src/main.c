@@ -1,12 +1,15 @@
 #include <stdio.h>
 
-#include "../include/common.h"
-#include "../include/algorithms.h"
+#include "common.h"
+#include "algorithms.h"
+#include "io.h"
+#include "stats.h"
 
 int main(void)
 {
     int reference[] = {
-        7, 0, 1, 2, 0, 3, 0, 4, 2, 3
+        7, 0, 1, 2, 0,
+        3, 0, 4, 2, 3
     };
 
     int ref_count =
@@ -14,48 +17,76 @@ int main(void)
 
     int frame_count = 3;
 
-    SimResult result =
-        run_fifo(reference, ref_count, frame_count);
+    /* -----------------------------
+       Program Header
+       ----------------------------- */
+    print_header();
 
-    printf("FIFO Simulation\n\n");
+    printf("\nAlgorithm : FIFO\n");
+    printf("Frames    : %d\n", frame_count);
 
-    printf("Ref\t");
+    printf("References: ");
 
-    for (int i = 0; i < frame_count; i++) {
-        printf("F%d\t", i + 1);
+    for (int i = 0; i < ref_count; i++) {
+        printf("%d ", reference[i]);
     }
 
-    printf("Result\tReplaced\n");
+    printf("\n");
 
-    printf("----------------------------------------\n");
+    /* -----------------------------
+       Run FIFO Algorithm
+       ----------------------------- */
+    SimResult result = run_fifo(
+        reference,
+        ref_count,
+        frame_count
+    );
 
-    for (int i = 0; i < result.total_refs; i++) {
+    /* -----------------------------
+       Select Display Mode
+       ----------------------------- */
+    int display_mode = input_display_mode();
 
-        printf("%d\t", result.steps[i].page);
+    switch (display_mode)
+    {
+        case 1:
+            /* Step-by-Step only */
+            print_step_simulation(
+                &result,
+                reference,
+                "FIFO"
+            );
+            break;
 
-        for (int j = 0; j < result.num_frames; j++) {
+        case 2:
+            /* Full Table only */
+            print_simulation_table(
+                &result,
+                "FIFO"
+            );
+            break;
 
-            if (result.steps[i].frames[j] == EMPTY_FRAME)
-                printf("-\t");
-            else
-                printf("%d\t",
-                       result.steps[i].frames[j]);
-        }
+        case 3:
+        default:
+            /* Both */
+            print_step_simulation(
+                &result,
+                reference,
+                "FIFO"
+            );
 
-        if (result.steps[i].is_fault)
-            printf("FAULT\t");
-        else
-            printf("HIT\t");
-
-        if (result.steps[i].replaced_page == EMPTY_FRAME)
-            printf("-\n");
-        else
-            printf("%d\n",
-                   result.steps[i].replaced_page);
+            print_simulation_table(
+                &result,
+                "FIFO"
+            );
+            break;
     }
 
-    printf("\nPage Faults : %d\n", result.faults);
-    printf("Page Hits   : %d\n", result.hits);
+    /* -----------------------------
+       Final Statistics
+       ----------------------------- */
+    print_statistics(&result);
 
     return 0;
+
 }
