@@ -1,0 +1,14 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build vmsim",
+      "type": "shell",
+      "command": "gcc",
+      "args": ["-g", "-Wall", "-Iinclude", "src/*.c", "-o", "vmsim.exe"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": ["$gcc"],
+      "group": { "kind": "build", "isDefault": true }
+    }
+  ]
+}
