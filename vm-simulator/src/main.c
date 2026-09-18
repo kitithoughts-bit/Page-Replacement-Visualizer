@@ -5,6 +5,10 @@
 
 int main(void)
 {
+    // ========================================
+    // Reference String
+    // ========================================
+
     int reference[] = {
         7, 0, 1, 2, 0, 3, 0, 4, 2, 3
     };
@@ -14,14 +18,36 @@ int main(void)
 
     int frame_count = 3;
 
-    SimResult result =
-        run_fifo(reference, ref_count, frame_count);
 
-    printf("FIFO Simulation\n\n");
+    // ========================================
+    // Run LRU
+    // ========================================
+
+    SimResult result =
+        run_lru(
+            reference,
+            ref_count,
+            frame_count
+        );
+
+
+    // ========================================
+    // Header
+    // ========================================
+
+    printf("LRU Simulation\n\n");
+
+
+    // ========================================
+    // Table Header
+    // ========================================
 
     printf("Ref\t");
 
-    for (int i = 0; i < frame_count; i++) {
+    for (int i = 0;
+         i < frame_count;
+         i++)
+    {
         printf("F%d\t", i + 1);
     }
 
@@ -29,33 +55,74 @@ int main(void)
 
     printf("----------------------------------------\n");
 
-    for (int i = 0; i < result.total_refs; i++) {
 
-        printf("%d\t", result.steps[i].page);
+    // ========================================
+    // แสดงแต่ละ Step
+    // ========================================
 
-        for (int j = 0; j < result.num_frames; j++) {
+    for (int i = 0;
+         i < result.total_refs;
+         i++)
+    {
+        // Reference
+        printf("%d\t",
+               result.steps[i].page);
 
-            if (result.steps[i].frames[j] == EMPTY_FRAME)
+
+        // Frames
+        for (int j = 0;
+             j < result.num_frames;
+             j++)
+        {
+            if (result.steps[i].frames[j]
+                == EMPTY_FRAME)
+            {
                 printf("-\t");
+            }
             else
+            {
                 printf("%d\t",
                        result.steps[i].frames[j]);
+            }
         }
 
-        if (result.steps[i].is_fault)
-            printf("FAULT\t");
-        else
-            printf("HIT\t");
 
-        if (result.steps[i].replaced_page == EMPTY_FRAME)
-            printf("-\n");
+        // HIT / FAULT
+        if (result.steps[i].is_fault)
+        {
+            printf("FAULT\t");
+        }
         else
+        {
+            printf("HIT\t");
+        }
+
+
+        // Replaced Page
+        if (result.steps[i].replaced_page
+            == EMPTY_FRAME)
+        {
+            printf("-\n");
+        }
+        else
+        {
             printf("%d\n",
                    result.steps[i].replaced_page);
+        }
     }
 
-    printf("\nPage Faults : %d\n", result.faults);
-    printf("Page Hits   : %d\n", result.hits);
+
+    // ========================================
+    // Summary
+    // ========================================
+
+    printf("\nPage Faults : %d\n",
+           result.faults);
+
+    printf("Page Hits   : %d\n",
+           result.hits);
+
 
     return 0;
 }
+
