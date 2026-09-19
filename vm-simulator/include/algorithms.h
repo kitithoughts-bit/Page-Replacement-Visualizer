@@ -24,5 +24,10 @@ SimResult run_optimal(
     int frame_count
 );
 
+SimResult run_lfu(
+    const int reference[],
+    int ref_count,
+    int frame_count
+);
 
 #endif
